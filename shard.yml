@@ -1,0 +1,14 @@
+name: secp256k1
+version: 0.1.0
+
+authors:
+  - qualterz <qualterz@tutamail.com>
+
+crystal: 1.6.2
+
+license: MIT
+
+development_dependencies:
+  libgen:
+    github: olbat/libgen
+    version: ~> 0.2.11

@@ -1,0 +1,30 @@
+---
+name: LibSecp256k1
+ldflags: "-lsecp256k1"
+packages: libsecp256k1
+destdir: src/lib_secp256k1
+definitions:
+  secp256k1:
+    description: Main declarations
+    includes: [secp256k1.h]
+    prefixes: [secp256k1, SECP256K1]
+  ecdh:
+    description: ECDH algorithm
+    includes: [secp256k1_ecdh.h]
+    prefixes: [secp256k1_ecdh, SECP256K1]
+  extrakeys:
+    description: Keys generation algorithms
+    includes: [secp256k1_extrakeys.h]
+    prefixes: [secp256k1, SECP256K1]
+  preallocated:
+    description: Preallocated structures
+    includes: [secp256k1_preallocated.h]
+    prefixes: [secp256k1, SECP256K1]
+  recovery:
+    description: Keys recovery algorithms
+    includes: [secp256k1_recovery.h]
+    prefixes: [secp256k1, SECP256K1]
+  schnorrsig:
+    description: Schnorr signature algorithm
+    includes: [secp256k1_schnorrsig.h]
+    prefixes: [secp256k1, SECP256K1]
