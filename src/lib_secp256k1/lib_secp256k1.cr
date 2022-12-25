@@ -4,6 +4,11 @@ lib LibSecp256k1
   $secp256k1_context_static : Secp256k1Context
   $secp256k1_nonce_function_default : Secp256k1NonceFunction
   $secp256k1_nonce_function_rfc6979 : Secp256k1NonceFunction
+  SECP256K1_TAG_PUBKEY_EVEN         = 2
+  SECP256K1_TAG_PUBKEY_HYBRID_EVEN  = 6
+  SECP256K1_TAG_PUBKEY_HYBRID_ODD   = 7
+  SECP256K1_TAG_PUBKEY_ODD          = 3
+  SECP256K1_TAG_PUBKEY_UNCOMPRESSED = 4
   alias Secp256k1ContextStruct = Void
   alias Secp256k1NonceFunction = (UInt8*, UInt8*, UInt8*, UInt8*, Void*, LibC::UInt -> LibC::Int)
   alias Secp256k1ScratchSpaceStruct = Void
