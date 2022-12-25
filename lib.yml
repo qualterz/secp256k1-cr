@@ -2,7 +2,7 @@
 name: LibSecp256k1
 ldflags: "-lsecp256k1"
 packages: libsecp256k1
-destdir: src/lib
+destdir: src/lib_secp256k1
 definitions:
   secp256k1:
     description: Main declarations
