@@ -28,3 +28,9 @@ definitions:
     description: Schnorr signature algorithm
     includes: [secp256k1_schnorrsig.h]
     prefixes: [secp256k1, SECP256K1]
+rename:
+  rules:
+    "*":
+      # Remove the library name prefix
+      - pattern: ^\w+1_
+        replacement: ""
