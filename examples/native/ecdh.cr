@@ -8,10 +8,8 @@ end
 
 secret_key = loop {
   value = randomness
-
-  if LibSecp256k1.secp256k1_ec_seckey_verify context, value
-    break value
-  end
+  verified = LibSecp256k1.secp256k1_ec_seckey_verify context, value
+  break value if verified
 }
 
 puts "Secret Key: #{secret_key.hexstring}"
