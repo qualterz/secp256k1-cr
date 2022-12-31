@@ -17,7 +17,11 @@ def create_keys(context)
 
   public_key = LibSecp256k1::Secp256k1Pubkey.new
 
-  unless LibSecp256k1.secp256k1_ec_pubkey_create(context, pointerof(public_key), secret_key)
+  unless LibSecp256k1.secp256k1_ec_pubkey_create(
+           context,
+           pointerof(public_key),
+           secret_key
+         )
     abort "Failed to create public key"
   end
 
@@ -26,7 +30,13 @@ def create_keys(context)
   compressed_public_key = Bytes.new(33)
   size = compressed_public_key.size.to_u64
 
-  unless LibSecp256k1.secp256k1_ec_pubkey_serialize(context, compressed_public_key, pointerof(size), pointerof(public_key), LibSecp256k1::SECP256K1_EC_COMPRESSED)
+  unless LibSecp256k1.secp256k1_ec_pubkey_serialize(
+           context,
+           compressed_public_key,
+           pointerof(size),
+           pointerof(public_key),
+           LibSecp256k1::SECP256K1_EC_COMPRESSED
+         )
     abort "Failed to serialize public key"
   end
 
@@ -41,7 +51,13 @@ second_secret_key, second_public_key, second_compressed_public_key = create_keys
 def create_shared_secret(context, public_key, secret_key)
   shared_secret = Bytes.new(32)
 
-  unless LibSecp256k1.secp256k1_ecdh(context, shared_secret, pointerof(public_key), secret_key, nil, nil)
+  unless LibSecp256k1.secp256k1_ecdh(
+           context,
+           shared_secret,
+           pointerof(public_key),
+           secret_key,
+           nil, nil
+         )
     abort "Failed to create shared secret"
   end
 
