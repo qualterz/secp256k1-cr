@@ -1,11 +1,5 @@
 require "../shared"
 
-context = LibSecp256k1.secp256k1_context_create(LibSecp256k1::SECP256K1_CONTEXT_NONE)
-
-unless LibSecp256k1.secp256k1_context_randomize(context, randomness)
-  abort "Failed to randomize context"
-end
-
 def create_keys(context)
   secret_key = loop {
     value = randomness
@@ -28,12 +22,12 @@ def create_keys(context)
   puts "Public Key Raw: #{public_key.data.to_slice.hexstring}"
 
   compressed_public_key = Bytes.new(33)
-  size = compressed_public_key.size.to_u64
+  length = compressed_public_key.size.to_u64
 
   unless LibSecp256k1.secp256k1_ec_pubkey_serialize(
            context,
            compressed_public_key,
-           pointerof(size),
+           pointerof(length),
            pointerof(public_key),
            LibSecp256k1::SECP256K1_EC_COMPRESSED
          )
@@ -44,5 +38,3 @@ def create_keys(context)
 
   return {secret_key, public_key, compressed_public_key}
 end
-
-LibSecp256k1.secp256k1_context_destroy context
