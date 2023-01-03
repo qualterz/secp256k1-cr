@@ -2,10 +2,10 @@ require "./native/*"
 
 context = create_context
 
-first_secret_key, first_public_key, first_serialized_public_key = create_ec_keys context
-second_secret_key, second_public_key, second_serialized_public_key = create_ec_keys context
+secret_key, public_key, serialized_public_key = create_ec_keys context
+another_secret_key, another_public_key, another_serialized_public_key = create_ec_keys context
 
-first_shared_secret = create_ecdh_shared_secret context, first_public_key, second_secret_key
-second_shared_secret = create_ecdh_shared_secret context, second_public_key, first_secret_key
+shared_secret = create_ecdh_shared_secret context, another_public_key, secret_key
+another_shared_secret = create_ecdh_shared_secret context, public_key, another_secret_key
 
 destroy_context context
