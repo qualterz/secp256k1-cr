@@ -1,6 +1,6 @@
 require "../shared"
 
-def create_keys(context)
+def create_ec_keys(context)
   secret_key = loop {
     value = randomness
     verified = LibSecp256k1.secp256k1_ec_seckey_verify context, value
