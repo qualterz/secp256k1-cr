@@ -3,14 +3,14 @@ require "../shared"
 def create_ecdsa_signature(context, message, secret_key)
   signature = LibSecp256k1::Secp256k1EcdsaSignature.new
 
-  unless LibSecp256k1.secp256k1_ecdsa_sign(
+  if LibSecp256k1.secp256k1_ecdsa_sign(
            context,
            pointerof(signature),
            message,
            secret_key,
            nil,
            nil
-         )
+         ) == 0
     abort "Failed to create ECDSA signature"
   end
 
@@ -18,11 +18,11 @@ def create_ecdsa_signature(context, message, secret_key)
 
   serialized_signature = Bytes.new(64)
 
-  unless LibSecp256k1.secp256k1_ecdsa_signature_serialize_compact(
+  if LibSecp256k1.secp256k1_ecdsa_signature_serialize_compact(
            context,
            serialized_signature,
            pointerof(signature)
-         )
+         ) == 0
     abort "Failed to serialize ECDSA signature"
   end
 
@@ -37,7 +37,7 @@ def verify_ecdsa_signature(context, signature, message, public_key)
        pointerof(signature),
        message,
        pointerof(public_key)
-     ) > 0
+     ) == 1
 
     puts "ECDSA Signature Verified"
 
