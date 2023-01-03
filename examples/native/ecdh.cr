@@ -11,10 +11,10 @@ def create_ecdh_shared_secret(context, public_key, secret_key)
            secret_key,
            nil, nil
          )
-    abort "Failed to create shared secret"
+    abort "Failed to create ECDH shared secret"
   end
 
-  puts "Shared Secret: #{shared_secret.hexstring}"
+  puts "ECDH Shared Secret: #{shared_secret.hexstring}"
 
   return shared_secret
 end
