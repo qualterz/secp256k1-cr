@@ -32,18 +32,19 @@ def create_ecdsa_signature(context, message, secret_key)
 end
 
 def verify_ecdsa_signature(context, signature, message, public_key)
-  unless LibSecp256k1.secp256k1_ecdsa_verify(
-           context,
-           pointerof(signature),
-           message,
-           pointerof(public_key)
-         )
-    puts "ECDSA Signature Verification Failed"
+  if LibSecp256k1.secp256k1_ecdsa_verify(
+       context,
+       pointerof(signature),
+       message,
+       pointerof(public_key)
+     ) > 0
 
-    return false
+    puts "ECDSA Signature Verified"
+
+    return true
   end
 
-  puts "ECDSA Signature Verified"
-  
-  return true
+  puts "ECDSA Signature Verification Failed"
+
+  return false
 end
