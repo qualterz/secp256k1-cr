@@ -7,3 +7,5 @@ second_secret_key, second_public_key, second_serialized_public_key = create_ec_k
 
 first_shared_secret = create_ecdh_shared_secret context, first_public_key, second_secret_key
 second_shared_secret = create_ecdh_shared_secret context, second_public_key, first_secret_key
+
+destroy_context context
