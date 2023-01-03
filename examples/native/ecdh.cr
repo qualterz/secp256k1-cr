@@ -1,7 +1,7 @@
 require "../shared"
 require "./ec"
 
-def create_shared_secret(context, public_key, secret_key)
+def create_ecdh_shared_secret(context, public_key, secret_key)
   shared_secret = Bytes.new(32)
 
   unless LibSecp256k1.secp256k1_ecdh(
