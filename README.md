@@ -9,7 +9,7 @@ Bindings for Bitcoin Core implementation of [secp256k1](https://github.com/bitco
    ```yaml
    dependencies:
      secp256k1:
-       github: qualterz/secp256k1-cr
+       github: qualterz/secp256k1.cr
    ```
 
 2. Run `shards install`
@@ -35,7 +35,7 @@ The bindings are generated automatically by executing `make generate_lib` shell 
 
 ## Contributing
 
-1. Fork it (<https://github.com/qualterz/secp256k1-cr/fork>)
+1. Fork it (<https://github.com/qualterz/secp256k1.cr/fork>)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
