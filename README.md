@@ -27,7 +27,7 @@ require "secp256k1"
 
 ## Documentation
 
-In case of using native bindings, original examples and documentation can be used for reference.
+In case of using native bindings, original [examples](https://github.com/bitcoin-core/secp256k1/tree/master/examples) and [documentation](https://github.com/bitcoin-core/secp256k1/blob/master/README.md) can be used for reference.
 
 ## Development
 
