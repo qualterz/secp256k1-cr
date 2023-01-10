@@ -33,6 +33,8 @@ In case of using native bindings, original examples and documentation can be use
 
 The bindings are generated automatically by executing `make generate_lib` shell command.
 
+The [libgen](https://github.com/olbat/libgen) is used as a bindings generator.
+
 ## Contributing
 
 1. Fork it (<https://github.com/qualterz/secp256k1.cr/fork>)
