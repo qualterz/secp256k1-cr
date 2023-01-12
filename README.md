@@ -1,6 +1,6 @@
 # secp256k1
 
-Bindings for Bitcoin Core implementation of [secp256k1](https://github.com/bitcoin-core/secp256k1) library.
+Bindings for the Bitcoin Core implementation of [secp256k1](https://github.com/bitcoin-core/secp256k1) library.
 
 ## Installation
 
