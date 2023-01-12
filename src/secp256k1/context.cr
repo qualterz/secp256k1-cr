@@ -20,7 +20,9 @@ module Secp256k1
     def initialize
       @inner_context = LibSecp256k1.secp256k1_context_create(ContextType::None.into_flag)
 
-      unless LibSecp256k1.secp256k1_context_randomize(@inner_context, randomness(32)) == RandomizationResult::Success
+      randomization_result = LibSecp256k1.secp256k1_context_randomize(@inner_context, randomness(32))
+
+      if randomization_result == RandomizationResult::Error
         raise "Failed to randomize context"
       end
     end
