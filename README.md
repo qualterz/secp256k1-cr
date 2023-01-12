@@ -23,7 +23,7 @@ require "secp256k1"
 ```
 
 - Native bindings. See [native examples](/examples/native/).
-- Crystal wrapper. See [wrapper examples](/examples/wrapper).
+- Crystal wrapper. See [wrapper examples](/examples/wrapper.cr).
 
 ## Documentation
 
