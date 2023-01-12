@@ -11,7 +11,7 @@ module Secp256k1
         when Type::None
           LibSecp256k1::SECP256K1_CONTEXT_NONE
         else
-          LibSecp256k1::SECP256K1_CONTEXT_NONE
+          raise "Unsupported context type"
         end
       end
     end
