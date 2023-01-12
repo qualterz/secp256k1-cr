@@ -32,7 +32,7 @@ module Secp256k1
 
       randomization_result = LibSecp256k1.secp256k1_context_randomize(@internal_context, Util.random_bytes(RANDOM_SEED_SIZE))
 
-      if randomization_result == RandomizationResult::Error
+      unless randomization_result == RandomizationResult::Success.value
         raise "Failed to randomize context."
       end
     end
