@@ -3,9 +3,9 @@ module Secp256k1
     extend self
 
     def random_bytes(size)
-      bytes = Bytes.new(size)
-      Random::Secure.random_bytes(bytes)
-      return bytes
+      Bytes.new(size).tap { |bytes|
+        Random::Secure.random_bytes(bytes)
+      }
     end
   end
 end
