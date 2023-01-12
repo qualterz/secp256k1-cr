@@ -1,4 +1,5 @@
 require "../lib_secp256k1"
+require "./util"
 
 module Secp256k1
   class Context
@@ -29,7 +30,7 @@ module Secp256k1
     def initialize
       @inner_context = LibSecp256k1.secp256k1_context_create(Type::None.into_flag)
 
-      randomization_result = LibSecp256k1.secp256k1_context_randomize(@inner_context, randomness(RANDOM_SEED_SIZE))
+      randomization_result = LibSecp256k1.secp256k1_context_randomize(@inner_context, Util.random_bytes(RANDOM_SEED_SIZE))
 
       if randomization_result == RandomizationResult::Error
         raise "Failed to randomize context"
@@ -38,12 +39,6 @@ module Secp256k1
 
     def finalize
       LibSecp256k1.secp256k1_context_destroy @inner_context
-    end
-
-    private def randomness(size)
-      randomness = Bytes.new(size)
-      Random::Secure.random_bytes(randomness)
-      return randomness
     end
   end
 end
