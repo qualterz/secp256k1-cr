@@ -12,35 +12,35 @@ module Secp256k1
   end
 
   class Keypair
-    @inner_keypair : LibSecp256k1::Secp256k1Keypair
+    @internal_keypair : LibSecp256k1::Secp256k1Keypair
 
     def initialize
-      @inner_keypair = LibSecp256k1::Secp256k1Keypair.new
+      @internal_keypair = LibSecp256k1::Secp256k1Keypair.new
     end
 
-    def initialize(@inner_keypair)
+    def initialize(@internal_keypair)
     end
 
     def data : Bytes
-      @inner_keypair.data.to_slice
+      @internal_keypair.data.to_slice
     end
   end
 
   class Context
     def generate_keypair
-      inner_keypair = LibSecp256k1::Secp256k1Keypair.new
+      internal_keypair = LibSecp256k1::Secp256k1Keypair.new
 
       loop {
         result = LibSecp256k1.secp256k1_keypair_create(
-          @inner_context,
-          pointerof(inner_keypair),
+          @internal_context,
+          pointerof(internal_keypair),
           Util.random_bytes(Keypair::SECRET_KEY_SIZE)
         )
 
         break if result == Keypair::CreationResult::Valid.value
       }
 
-      Keypair.new(inner_keypair)
+      Keypair.new(internal_keypair)
     end
   end
 end
