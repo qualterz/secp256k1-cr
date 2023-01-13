@@ -2,6 +2,12 @@
 
 Bindings for the Bitcoin Core implementation of [secp256k1](https://github.com/bitcoin-core/secp256k1) library.
 
+## Prerequisites
+
+Applications that using these bindings must have access to the installed `libsecp256k1` library.
+
+Since these bindings are designed for the Bitcoin Core implementation, there is no guarantee of working with others.
+
 ## Installation
 
 1. Add the dependency to your `shard.yml`:
@@ -13,8 +19,6 @@ Bindings for the Bitcoin Core implementation of [secp256k1](https://github.com/b
    ```
 
 2. Run `shards install`
-
-3. Ensure that secp256k1 library is installed on system
 
 ## Usage
 
