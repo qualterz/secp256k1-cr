@@ -13,7 +13,7 @@ def create_keypair(context)
     break if status == 1
   }
 
-  puts "Keypair Raw: #{keypair.data.to_slice.hexstring}"
+  puts "Keypair raw: #{keypair.data.to_slice.hexstring}"
 
   return keypair
 end
@@ -27,10 +27,10 @@ def create_xonly_public_key(context, keypair)
        nil,
        pointerof(keypair)
      ) == 0
-    abort "Failed to create XOnly public key"
+    abort "Failed to create XOnly public key."
   end
 
-  puts "XOnly Public Key Raw: #{public_key.data.to_slice.hexstring}"
+  puts "XOnly public key raw: #{public_key.data.to_slice.hexstring}"
 
   return public_key
 end

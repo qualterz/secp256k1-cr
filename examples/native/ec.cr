@@ -7,7 +7,7 @@ def create_ec_keys(context)
     break value if verified
   }
 
-  puts "Secret Key: #{secret_key.hexstring}"
+  puts "Secret key: #{secret_key.hexstring}"
 
   public_key = LibSecp256k1::Secp256k1Pubkey.new
 
@@ -16,10 +16,10 @@ def create_ec_keys(context)
            pointerof(public_key),
            secret_key
          ) == 0
-    abort "Failed to create EC public key"
+    abort "Failed to create EC public key."
   end
 
-  puts "EC Public Key Raw: #{public_key.data.to_slice.hexstring}"
+  puts "EC public key raw: #{public_key.data.to_slice.hexstring}"
 
   compressed_public_key = Bytes.new(33)
   length = compressed_public_key.size.to_u64
@@ -31,10 +31,10 @@ def create_ec_keys(context)
            pointerof(public_key),
            LibSecp256k1::SECP256K1_EC_COMPRESSED
          ) == 0
-    abort "Failed to serialize EC public key"
+    abort "Failed to serialize EC public key."
   end
 
-  puts "EC Public Key Serialized: #{compressed_public_key.hexstring}"
+  puts "EC public key serialized: #{compressed_public_key.hexstring}"
 
   return {secret_key, public_key, compressed_public_key}
 end

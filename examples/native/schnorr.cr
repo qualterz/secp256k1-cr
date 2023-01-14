@@ -10,10 +10,10 @@ def create_schnorr_signature(context, message, keypair)
        pointerof(keypair),
        randomness
      ) == 0
-    abort "Failed to create Schnorr signature"
+    abort "Failed to create Schnorr signature."
   end
 
-  puts "Schnorr Signature Raw: #{signature.hexstring}"
+  puts "Schnorr signature raw: #{signature.hexstring}"
 
   return signature
 end
@@ -26,12 +26,12 @@ def verify_schnorr_signature(context, signature, message, public_key)
        32,
        pointerof(public_key)
      ) == 1
-    puts "Schnorr Signature Verified"
+    puts "Schnorr signature verified."
 
     return true
   end
 
-  puts "Schnorr Signature Verification Failed"
+  puts "Schnorr signature verification failed."
 
   return false
 end

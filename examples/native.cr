@@ -12,7 +12,7 @@ another_shared_secret = create_ecdh_shared_secret context, public_key, another_s
 
 message = OpenSSL::Digest.new("SHA256").update("Hello, crypto!").final
 
-puts "SHA256 Hash Message Hex: #{message.hexstring}"
+puts "SHA256 message hash: #{message.hexstring}"
 
 ecdsa_signature, ecdsa_serialized_signature = create_ecdsa_signature context, message, secret_key
 signature_verification_status = verify_ecdsa_signature context, ecdsa_signature, message, public_key
