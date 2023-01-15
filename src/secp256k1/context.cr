@@ -27,6 +27,9 @@ module Secp256k1
   class Context
     @internal_context : LibSecp256k1::Secp256k1Context
 
+    def initialize(@internal_context)
+    end
+
     def initialize
       @internal_context = LibSecp256k1.secp256k1_context_create(Type::None.into_flag)
 
