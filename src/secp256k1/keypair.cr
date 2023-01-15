@@ -18,11 +18,11 @@ module Secp256k1
     def initialize(@internal_context, @internal_keypair)
     end
 
-    def data : Bytes
+    def bytes : Bytes
       @internal_keypair.data.to_slice
     end
 
-    def secret_key : Bytes
+    def secret_key_bytes : Bytes
       Bytes.new(SECRET_KEY_SIZE).tap { |bytes|
         LibSecp256k1.secp256k1_keypair_sec(
           @internal_context,
