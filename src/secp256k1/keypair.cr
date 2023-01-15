@@ -12,22 +12,22 @@ module Secp256k1
   end
 
   class Keypair
-    @internal_context : LibSecp256k1::Secp256k1Context
-    @internal_keypair : LibSecp256k1::Secp256k1Keypair
+    @wrapped_context : LibSecp256k1::Secp256k1Context
+    @wrapped_keypair : LibSecp256k1::Secp256k1Keypair
 
-    def initialize(@internal_context, @internal_keypair)
+    def initialize(@wrapped_context, @wrapped_keypair)
     end
 
     def bytes : Bytes
-      @internal_keypair.data.to_slice
+      @wrapped_keypair.data.to_slice
     end
 
     def secret_key_bytes : Bytes
       Bytes.new(SECRET_KEY_SIZE).tap { |bytes|
         LibSecp256k1.secp256k1_keypair_sec(
-          @internal_context,
+          @wrapped_context,
           bytes,
-          pointerof(@internal_keypair)
+          pointerof(@wrapped_keypair)
         )
       }
     end
@@ -35,19 +35,19 @@ module Secp256k1
 
   class Context
     def generate_keypair
-      internal_keypair = LibSecp256k1::Secp256k1Keypair.new
+      wrapped_keypair = LibSecp256k1::Secp256k1Keypair.new
 
       loop {
         result = LibSecp256k1.secp256k1_keypair_create(
-          @internal_context,
-          pointerof(internal_keypair),
+          @wrapped_context,
+          pointerof(wrapped_keypair),
           Util.random_bytes(Keypair::SECRET_KEY_SIZE)
         )
 
         break if result == Keypair::CreationResult::Valid.value
       }
 
-      Keypair.new(@internal_context, internal_keypair)
+      Keypair.new(@wrapped_context, wrapped_keypair)
     end
   end
 end

@@ -25,16 +25,16 @@ module Secp256k1
   end
 
   class Context
-    @internal_context : LibSecp256k1::Secp256k1Context
+    @wrapped_context : LibSecp256k1::Secp256k1Context
 
-    def initialize(@internal_context)
+    def initialize(@wrapped_context)
     end
 
     def initialize
-      @internal_context = LibSecp256k1.secp256k1_context_create(Type::None.into_flag)
+      @wrapped_context = LibSecp256k1.secp256k1_context_create(Type::None.into_flag)
 
       result = LibSecp256k1.secp256k1_context_randomize(
-        @internal_context,
+        @wrapped_context,
         Util.random_bytes(RANDOM_SEED_SIZE)
       )
 
@@ -44,7 +44,7 @@ module Secp256k1
     end
 
     def finalize
-      LibSecp256k1.secp256k1_context_destroy @internal_context
+      LibSecp256k1.secp256k1_context_destroy @wrapped_context
     end
   end
 end
