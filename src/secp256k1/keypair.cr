@@ -36,6 +36,18 @@ module Secp256k1
         )
       }
     end
+
+    def public_key
+      wrapped_public_key_instance = LibSecp256k1::Secp256k1Pubkey.new
+
+      LibSecp256k1.secp256k1_keypair_pub(
+        @wrapped_context,
+        pointerof(wrapped_public_key_instance),
+        pointerof(@wrapped_keypair)
+      )
+
+      PublicKey.new(@wrapped_context, wrapped_public_key_instance)
+    end
   end
 
   class Context
