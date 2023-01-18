@@ -48,6 +48,19 @@ module Secp256k1
 
       PublicKey.new(@wrapped_context, wrapped_public_key_instance)
     end
+
+    def xonly_public_key
+      wrapped_xonly_public_key_instance = LibSecp256k1::Secp256k1XonlyPubkey.new
+
+      LibSecp256k1.secp256k1_keypair_xonly_pub(
+        @wrapped_context,
+        pointerof(wrapped_xonly_public_key_instance),
+        nil,
+        pointerof(@wrapped_keypair)
+      )
+
+      XOnlyPublicKey.new(@wrapped_context, wrapped_xonly_public_key_instance)
+    end
   end
 
   class Context
