@@ -3,6 +3,8 @@ require "./util"
 
 module Secp256k1
   class Context
+    RANDOM_SEED_SIZE = 32
+
     enum Type
       None
 
@@ -20,8 +22,6 @@ module Secp256k1
       Error   = 0
       Success = 1
     end
-
-    RANDOM_SEED_SIZE = 32
   end
 
   class Context
