@@ -2,16 +2,14 @@ require "../lib_secp256k1"
 require "./util"
 
 module Secp256k1
-  SECRET_KEY_SIZE = 32
-
   class PublicKey
+    SECRET_KEY_SIZE = 32
+
     enum CreationResult
       Invalid = 0
       Valid   = 1
     end
-  end
 
-  class PublicKey
     class Error < Exception
     end
   end
