@@ -1,4 +1,5 @@
 require "../lib_secp256k1"
+require "./error"
 require "./util"
 
 module Secp256k1
@@ -8,9 +9,6 @@ module Secp256k1
     enum CreationResult
       Invalid = 0
       Valid   = 1
-    end
-
-    class Error < Exception
     end
   end
 
@@ -72,7 +70,7 @@ module Secp256k1
       )
 
       unless result == Keypair::CreationResult::Valid.value
-        raise Keypair::Error.new "Secret key is invalid"
+        raise Error.new "Secret key is invalid"
       end
 
       Keypair.new(@wrapped_context, wrapped_keypair_instance)
@@ -84,7 +82,7 @@ module Secp256k1
       begin
         return keypair_from secret_key
       rescue
-        raise Keypair::Error.new "Failed to generate keypair"
+        raise Error.new "Failed to generate keypair"
       end
     end
   end

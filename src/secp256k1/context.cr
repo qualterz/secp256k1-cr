@@ -13,7 +13,7 @@ module Secp256k1
         when Type::None
           LibSecp256k1::SECP256K1_CONTEXT_NONE
         else
-          raise "Unsupported context type."
+          raise Error.new "Unsupported context type"
         end
       end
     end
@@ -39,7 +39,7 @@ module Secp256k1
       )
 
       unless result == RandomizationResult::Success.value
-        raise "Failed to randomize context."
+        raise Error.new "Failed to randomize context"
       end
     end
 

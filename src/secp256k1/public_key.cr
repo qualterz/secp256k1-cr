@@ -1,4 +1,5 @@
 require "../lib_secp256k1"
+require "./error"
 require "./util"
 
 module Secp256k1
@@ -8,9 +9,6 @@ module Secp256k1
     enum CreationResult
       Invalid = 0
       Valid   = 1
-    end
-
-    class Error < Exception
     end
   end
 
@@ -37,7 +35,7 @@ module Secp256k1
       )
 
       unless result == PublicKey::CreationResult::Valid.value
-        raise PublicKey::Error.new "Secret key is invalid"
+        raise Error.new "Secret key is invalid"
       end
 
       PublicKey.new(@wrapped_context, wrapped_public_key_instance)
