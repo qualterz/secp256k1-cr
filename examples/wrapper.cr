@@ -18,7 +18,11 @@ keypair_xonly_public_key = keypair.xonly_public_key.bytes
 
 puts "Keypair XOnly public key: #{keypair_xonly_public_key.hexstring}"
 
-message_to_sign = OpenSSL::Digest.new("SHA256").update("Hello, crypto!").final
-signature_bytes = keypair.schnorr_sign(message_to_sign)
+message_hash = OpenSSL::Digest.new("SHA256").update("Hello, crypto!").final
+signature_bytes = keypair.schnorr_sign(message_hash)
 
 puts "Schnorr signature: #{signature_bytes.hexstring}"
+
+signature_verified = keypair.xonly_public_key.schnorr_verify(signature_bytes, message_hash)
+
+puts "Schnorr signature verification: #{signature_verified}"

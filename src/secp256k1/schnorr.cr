@@ -12,6 +12,11 @@ module Secp256k1
       Failure = 0
       Success = 1
     end
+
+    enum VerificationResult
+      Incorrect = 0
+      Correct   = 1
+    end
   end
 
   class Keypair
@@ -35,6 +40,32 @@ module Secp256k1
 
     def schnorr_sign(message : Bytes) : Bytes
       schnorr_sign message, Util.random_bytes(Schnorr::AUXILIARY_RANDOMNESS_SIZE)
+    end
+  end
+
+  class XOnlyPublicKey
+    def schnorr_verify(signature : Bytes, message : Bytes) : Bool
+      result = LibSecp256k1.secp256k1_schnorrsig_verify(
+        @wrapped_context,
+        signature,
+        message,
+        message.size,
+        pointerof(@wrapped_xonly_public_key)
+      )
+
+      result == Schnorr::VerificationResult::Correct.value
+    end
+
+    def schnorr_verify(signature : Bytes)
+      result = LibSecp256k1.secp256k1_schnorrsig_verify(
+        @wrapped_context,
+        signature,
+        nil,
+        0,
+        pointerof(@wrapped_xonly_public_key)
+      )
+
+      result == Schnorr::VerificationResult::Correct.value
     end
   end
 end
