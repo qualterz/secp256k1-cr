@@ -25,7 +25,7 @@ module Secp256k1
   end
 
   class Context
-    def public_key_from(bytes : Bytes)
+    def public_key_create(bytes : Bytes)
       wrapped_public_key_instance = LibSecp256k1::Secp256k1Pubkey.new
 
       result = LibSecp256k1.secp256k1_ec_pubkey_create(
