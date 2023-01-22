@@ -25,13 +25,13 @@ module Secp256k1
   end
 
   class Context
-    def public_key_create(bytes : Bytes)
+    def public_key_create(secret_key : Bytes)
       wrapped_public_key_instance = LibSecp256k1::Secp256k1Pubkey.new
 
       result = LibSecp256k1.secp256k1_ec_pubkey_create(
         @wrapped_context,
         pointerof(wrapped_public_key_instance),
-        bytes
+        secret_key
       )
 
       unless result == PublicKey::CreationResult::Valid.value
