@@ -60,13 +60,13 @@ module Secp256k1
   end
 
   class Context
-    def keypair_from(bytes : Bytes)
+    def keypair_create(secret_key : Bytes)
       wrapped_keypair_instance = LibSecp256k1::Secp256k1Keypair.new
 
       result = LibSecp256k1.secp256k1_keypair_create(
         @wrapped_context,
         pointerof(wrapped_keypair_instance),
-        bytes
+        secret_key
       )
 
       unless result == Keypair::CreationResult::Valid.value
@@ -76,11 +76,11 @@ module Secp256k1
       Keypair.new(@wrapped_context, wrapped_keypair_instance)
     end
 
-    def generate_keypair
+    def keypair_generate
       secret_key = Util.random_bytes(Keypair::SECRET_KEY_SIZE)
 
       begin
-        return keypair_from secret_key
+        return keypair_create secret_key
       rescue
         raise Error.new "Failed to generate keypair"
       end

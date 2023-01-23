@@ -2,7 +2,7 @@ require "./shared"
 require "openssl"
 
 context = Secp256k1::Context.new
-keypair = context.generate_keypair
+keypair = context.keypair_generate
 
 puts "Keypair hex: #{keypair.bytes.hexstring}"
 
