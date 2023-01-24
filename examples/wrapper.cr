@@ -26,3 +26,6 @@ puts "Schnorr signature: #{signature_bytes.hexstring}"
 signature_verified = keypair.xonly_public_key.schnorr_verify(signature_bytes, message_hash)
 
 puts "Schnorr signature verification: #{signature_verified}"
+
+puts "Public key serialized: #{keypair.public_key.serialize.hexstring}"
+puts "Public key serialized and compressed: #{keypair.public_key.serialize_compressed.hexstring}"
