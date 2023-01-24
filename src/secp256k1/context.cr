@@ -27,15 +27,17 @@ module Secp256k1
   class Context
     @wrapped_context : LibSecp256k1::Secp256k1Context
 
-    def initialize(@wrapped_context)
+    @random : Random
+
+    def initialize(@wrapped_context, @random)
     end
 
-    def initialize
+    def initialize(@random)
       @wrapped_context = LibSecp256k1.secp256k1_context_create(Type::None.into_flag)
 
       result = LibSecp256k1.secp256k1_context_randomize(
         @wrapped_context,
-        Util.random_bytes(RANDOM_SEED_SIZE)
+        @random.random_bytes(RANDOM_SEED_SIZE)
       )
 
       unless result == RandomizationResult::Success.value

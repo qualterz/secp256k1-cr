@@ -39,7 +39,7 @@ module Secp256k1
     end
 
     def schnorr_sign(message : Bytes) : Bytes
-      schnorr_sign message, Util.random_bytes(Schnorr::AUXILIARY_RANDOMNESS_SIZE)
+      schnorr_sign message, @random.random_bytes(Schnorr::AUXILIARY_RANDOMNESS_SIZE)
     end
   end
 

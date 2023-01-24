@@ -16,7 +16,9 @@ module Secp256k1
     @wrapped_context : LibSecp256k1::Secp256k1Context
     @wrapped_keypair : LibSecp256k1::Secp256k1Keypair
 
-    def initialize(@wrapped_context, @wrapped_keypair)
+    @random : Random
+
+    def initialize(@wrapped_context, @wrapped_keypair, @random)
     end
 
     def bytes : Bytes
@@ -73,11 +75,11 @@ module Secp256k1
         raise Error.new "Secret key is invalid"
       end
 
-      Keypair.new(@wrapped_context, wrapped_keypair_instance)
+      Keypair.new(@wrapped_context, wrapped_keypair_instance, @random)
     end
 
-    def keypair_generate(random : Random)
-      secret_key = random.random_bytes(Keypair::SECRET_KEY_SIZE)
+    def keypair_generate
+      secret_key = @random.random_bytes(Keypair::SECRET_KEY_SIZE)
 
       begin
         return keypair_create secret_key
