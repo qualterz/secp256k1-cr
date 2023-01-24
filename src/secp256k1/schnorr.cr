@@ -1,6 +1,5 @@
 require "../lib_secp256k1"
 require "./error"
-require "./util"
 
 module Secp256k1
   class Schnorr

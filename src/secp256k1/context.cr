@@ -1,5 +1,4 @@
 require "../lib_secp256k1"
-require "./util"
 
 module Secp256k1
   class Context
