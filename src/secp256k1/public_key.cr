@@ -1,6 +1,5 @@
 require "../lib_secp256k1"
 require "./error"
-require "./util"
 
 module Secp256k1
   class PublicKey
@@ -27,29 +26,27 @@ module Secp256k1
     end
 
     def serialize
-      Bytes.new(PUBLIC_KEY_SERIALIZED_SIZE).tap { |bytes|
-        size = bytes.size.to_u64
-
-        LibSecp256k1.secp256k1_ec_pubkey_serialize(
-          @wrapped_context,
-          bytes,
-          pointerof(size),
-          pointerof(@wrapped_public_key),
-          LibSecp256k1::SECP256K1_EC_UNCOMPRESSED
-        )
-      }
+      serialize_bytes(
+        PUBLIC_KEY_SERIALIZED_SIZE,
+        LibSecp256k1::SECP256K1_EC_UNCOMPRESSED
+      )
     end
 
     def serialize_compressed
-      Bytes.new(PUBLIC_KEY_SERIALIZED_COMPRESSED_SIZE).tap { |bytes|
-        size = bytes.size.to_u64
+      serialize_bytes(
+        PUBLIC_KEY_SERIALIZED_COMPRESSED_SIZE,
+        LibSecp256k1::SECP256K1_EC_COMPRESSED
+      )
+    end
 
+    def serialize_bytes(size, flags)
+      Bytes.new(size).tap { |bytes|
         LibSecp256k1.secp256k1_ec_pubkey_serialize(
           @wrapped_context,
           bytes,
           pointerof(size),
           pointerof(@wrapped_public_key),
-          LibSecp256k1::SECP256K1_EC_COMPRESSED
+          flags
         )
       }
     end
