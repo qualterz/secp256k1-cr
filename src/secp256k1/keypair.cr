@@ -76,8 +76,8 @@ module Secp256k1
       Keypair.new(@wrapped_context, wrapped_keypair_instance)
     end
 
-    def keypair_generate
-      secret_key = Util.random_bytes(Keypair::SECRET_KEY_SIZE)
+    def keypair_generate(random : Random)
+      secret_key = random.random_bytes(Keypair::SECRET_KEY_SIZE)
 
       begin
         return keypair_create secret_key

@@ -2,7 +2,8 @@ require "./shared"
 require "openssl"
 
 context = Secp256k1::Context.new
-keypair = context.keypair_generate
+random = Random::PCG32.new(1337)
+keypair = context.keypair_generate random
 
 puts "Keypair hex: #{keypair.bytes.hexstring}"
 
