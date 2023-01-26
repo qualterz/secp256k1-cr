@@ -27,5 +27,11 @@ signature_verified = keypair.xonly_public_key.schnorr_verify(signature_bytes, me
 
 puts "Schnorr signature verification: #{signature_verified}"
 
-puts "Public key serialized: #{keypair.public_key.serialize.hexstring}"
+public_key_serialized = keypair.public_key.serialize
+
+puts "Public key serialized: #{public_key_serialized.hexstring}"
 puts "Public key serialized and compressed: #{keypair.public_key.serialize_compressed.hexstring}"
+
+public_key_parsed = context.public_key_parse(public_key_serialized)
+
+puts "Public key parsed: #{public_key_parsed.bytes.hexstring}"

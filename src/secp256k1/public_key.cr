@@ -12,6 +12,11 @@ module Secp256k1
       Invalid = 0
       Valid   = 1
     end
+
+    enum ParseResult
+      Invalid = 0
+      Valid   = 1
+    end
   end
 
   class PublicKey
@@ -64,6 +69,23 @@ module Secp256k1
 
       unless result == PublicKey::CreationResult::Valid.value
         raise Error.new "Secret key is invalid"
+      end
+
+      PublicKey.new(@wrapped_context, wrapped_public_key_instance)
+    end
+
+    def public_key_parse(public_key : Bytes)
+      wrapped_public_key_instance = LibSecp256k1::Secp256k1Pubkey.new
+
+      result = LibSecp256k1.secp256k1_ec_pubkey_parse(
+        @wrapped_context,
+        pointerof(wrapped_public_key_instance),
+        public_key,
+        public_key.size
+      )
+
+      unless result == PublicKey::ParseResult::Valid.value
+        raise Error.new "Public key is invalid"
       end
 
       PublicKey.new(@wrapped_context, wrapped_public_key_instance)
