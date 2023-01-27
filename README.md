@@ -33,6 +33,8 @@ require "secp256k1"
 
 In case of using native bindings, original [examples](https://github.com/bitcoin-core/secp256k1/tree/master/examples) and [documentation](https://github.com/bitcoin-core/secp256k1/blob/master/README.md) can be used for reference.
 
+Deprecated library functions will not be wrapped, so if there is need to use them, they can be used natively.
+
 ## Development
 
 The bindings are generated automatically by executing `make generate_lib` shell command.
