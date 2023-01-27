@@ -31,20 +31,20 @@ module Secp256k1
     end
 
     def serialize
-      serialize_bytes(
+      serialize(
         PUBLIC_KEY_SERIALIZED_SIZE,
         LibSecp256k1::SECP256K1_EC_UNCOMPRESSED
       )
     end
 
     def serialize_compressed
-      serialize_bytes(
+      serialize(
         PUBLIC_KEY_SERIALIZED_COMPRESSED_SIZE,
         LibSecp256k1::SECP256K1_EC_COMPRESSED
       )
     end
 
-    def serialize_bytes(size, flags)
+    def serialize(size, flags)
       Bytes.new(size).tap { |bytes|
         LibSecp256k1.secp256k1_ec_pubkey_serialize(
           @wrapped_context,
