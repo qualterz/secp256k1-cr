@@ -46,6 +46,6 @@ public_keys = Array.new(4) { |index|
   }
 }
 
-public_key_combination = public_key_another.combine(public_keys)
+public_key = public_key_another.combine(public_keys)
 
-puts "Public key combined: #{public_key_combination.bytes.hexstring}"
+puts "Public key combined: #{public_key.bytes.hexstring}"

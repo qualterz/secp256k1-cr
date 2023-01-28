@@ -62,24 +62,22 @@ module Secp256k1
     end
 
     def combine(public_keys : Array(PublicKey))
-      public_key_output = LibSecp256k1::Secp256k1Pubkey.new
-
-      public_keys = public_keys.map { |public_key|
+      public_key_pointers = public_keys.map { |public_key|
         pointerof(public_key.@wrapped_public_key)
       }
 
       result = LibSecp256k1.secp256k1_ec_pubkey_combine(
         @wrapped_context,
-        pointerof(public_key_output),
-        public_keys.to_unsafe,
-        public_keys.size
+        out public_key_out,
+        public_key_pointers.to_unsafe,
+        public_key_pointers.size
       )
 
       if result == CombineResult::Invalid.value
         raise Error.new "Public key combination sum is invalid"
       end
 
-      PublicKey.new(@wrapped_context, public_key_output)
+      PublicKey.new(@wrapped_context, public_key_out)
     end
 
     def combine(public_key : PublicKey)
@@ -89,11 +87,9 @@ module Secp256k1
 
   class Context
     def public_key_create(secret_key : Bytes)
-      wrapped_public_key_instance = LibSecp256k1::Secp256k1Pubkey.new
-
       result = LibSecp256k1.secp256k1_ec_pubkey_create(
         @wrapped_context,
-        pointerof(wrapped_public_key_instance),
+        out public_key_out,
         secret_key
       )
 
@@ -101,15 +97,13 @@ module Secp256k1
         raise Error.new "Secret key is invalid"
       end
 
-      PublicKey.new(@wrapped_context, wrapped_public_key_instance)
+      PublicKey.new(@wrapped_context, public_key_out)
     end
 
     def public_key_parse(public_key : Bytes)
-      wrapped_public_key_instance = LibSecp256k1::Secp256k1Pubkey.new
-
       result = LibSecp256k1.secp256k1_ec_pubkey_parse(
         @wrapped_context,
-        pointerof(wrapped_public_key_instance),
+        out public_key_out,
         public_key,
         public_key.size
       )
@@ -118,7 +112,7 @@ module Secp256k1
         raise Error.new "Public key is invalid"
       end
 
-      PublicKey.new(@wrapped_context, wrapped_public_key_instance)
+      PublicKey.new(@wrapped_context, public_key_out)
     end
   end
 end

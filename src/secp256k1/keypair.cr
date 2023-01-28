@@ -35,38 +35,32 @@ module Secp256k1
     end
 
     def public_key
-      wrapped_public_key_instance = LibSecp256k1::Secp256k1Pubkey.new
-
       LibSecp256k1.secp256k1_keypair_pub(
         @wrapped_context,
-        pointerof(wrapped_public_key_instance),
+        out public_key_out,
         pointerof(@wrapped_keypair)
       )
 
-      PublicKey.new(@wrapped_context, wrapped_public_key_instance)
+      PublicKey.new(@wrapped_context, public_key_out)
     end
 
     def xonly_public_key
-      wrapped_xonly_public_key_instance = LibSecp256k1::Secp256k1XonlyPubkey.new
-
       LibSecp256k1.secp256k1_keypair_xonly_pub(
         @wrapped_context,
-        pointerof(wrapped_xonly_public_key_instance),
+        out xonly_public_key_out,
         nil,
         pointerof(@wrapped_keypair)
       )
 
-      XOnlyPublicKey.new(@wrapped_context, wrapped_xonly_public_key_instance)
+      XOnlyPublicKey.new(@wrapped_context, xonly_public_key_out)
     end
   end
 
   class Context
     def keypair_create(secret_key : Bytes)
-      wrapped_keypair_instance = LibSecp256k1::Secp256k1Keypair.new
-
       result = LibSecp256k1.secp256k1_keypair_create(
         @wrapped_context,
-        pointerof(wrapped_keypair_instance),
+        out keypair_out,
         secret_key
       )
 
@@ -74,7 +68,7 @@ module Secp256k1
         raise Error.new "Secret key is invalid"
       end
 
-      Keypair.new(@wrapped_context, wrapped_keypair_instance, @random)
+      Keypair.new(@wrapped_context, keypair_out, @random)
     end
 
     def keypair_generate
