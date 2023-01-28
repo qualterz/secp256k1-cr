@@ -6,16 +6,6 @@ module Secp256k1
     MESSAGE_SIZE              = 32
     SIGNATURE_SIZE            = 64
     AUXILIARY_RANDOMNESS_SIZE = 32
-
-    enum SignResult
-      Failure = 0
-      Success = 1
-    end
-
-    enum VerificationResult
-      Incorrect = 0
-      Correct   = 1
-    end
   end
 
   class Keypair
@@ -30,7 +20,7 @@ module Secp256k1
         auxiliary_randomness
       )
 
-      unless result == Schnorr::SignResult::Success.value
+      if result == Result::Wrong.value
         raise Error.new "Failed to create Schnorr signature"
       end
 
@@ -52,7 +42,7 @@ module Secp256k1
         pointerof(@wrapped_xonly_public_key)
       )
 
-      result == Schnorr::VerificationResult::Correct.value
+      result == Result::Correct.value
     end
 
     def schnorr_verify(signature : Bytes)
@@ -64,7 +54,7 @@ module Secp256k1
         pointerof(@wrapped_xonly_public_key)
       )
 
-      result == Schnorr::VerificationResult::Correct.value
+      result == Result::Correct.value
     end
   end
 end

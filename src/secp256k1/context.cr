@@ -16,11 +16,6 @@ module Secp256k1
         end
       end
     end
-
-    enum RandomizationResult
-      Error   = 0
-      Success = 1
-    end
   end
 
   class Context
@@ -39,7 +34,7 @@ module Secp256k1
         @random.random_bytes(RANDOM_SEED_SIZE)
       )
 
-      unless result == RandomizationResult::Success.value
+      if result == Result::Wrong.value
         raise Error.new "Failed to randomize context"
       end
     end

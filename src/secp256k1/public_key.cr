@@ -7,21 +7,6 @@ module Secp256k1
 
     PUBLIC_KEY_SERIALIZED_SIZE            = 65_u64
     PUBLIC_KEY_SERIALIZED_COMPRESSED_SIZE = 33_u64
-
-    enum CreationResult
-      Invalid = 0
-      Valid   = 1
-    end
-
-    enum ParseResult
-      Invalid = 0
-      Valid   = 1
-    end
-
-    enum CombineResult
-      Invalid = 0
-      Valid   = 1
-    end
   end
 
   class PublicKey
@@ -73,7 +58,7 @@ module Secp256k1
         public_key_pointers.size
       )
 
-      if result == CombineResult::Invalid.value
+      if result == Result::Wrong.value
         raise Error.new "Public key combination sum is invalid"
       end
 
@@ -93,7 +78,7 @@ module Secp256k1
         secret_key
       )
 
-      unless result == PublicKey::CreationResult::Valid.value
+      if result == Result::Wrong.value
         raise Error.new "Secret key is invalid"
       end
 
@@ -108,7 +93,7 @@ module Secp256k1
         public_key.size
       )
 
-      unless result == PublicKey::ParseResult::Valid.value
+      if result == Result::Wrong.value
         raise Error.new "Public key is invalid"
       end
 

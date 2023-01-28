@@ -4,11 +4,6 @@ require "./types"
 module Secp256k1
   class Keypair
     SECRET_KEY_SIZE = 32
-
-    enum CreationResult
-      Invalid = 0
-      Valid   = 1
-    end
   end
 
   class Keypair
@@ -64,7 +59,7 @@ module Secp256k1
         secret_key
       )
 
-      unless result == Keypair::CreationResult::Valid.value
+      if result == Result::Wrong.value
         raise Error.new "Secret key is invalid"
       end
 
