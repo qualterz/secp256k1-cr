@@ -17,6 +17,11 @@ module Secp256k1
       Invalid = 0
       Valid   = 1
     end
+
+    enum CombineResult
+      Invalid = 0
+      Valid   = 1
+    end
   end
 
   class PublicKey
@@ -54,6 +59,31 @@ module Secp256k1
           flags
         )
       }
+    end
+
+    def combine(public_keys : Array(PublicKey))
+      public_key_output = LibSecp256k1::Secp256k1Pubkey.new
+
+      public_keys = public_keys.map { |public_key|
+        pointerof(public_key.@wrapped_public_key)
+      }
+
+      result = LibSecp256k1.secp256k1_ec_pubkey_combine(
+        @wrapped_context,
+        pointerof(public_key_output),
+        public_keys.to_unsafe,
+        public_keys.size
+      )
+
+      if (result == CombineResult::Invalid.value)
+        raise Error.new "Public key combination sum is invalid"
+      end
+
+      PublicKey.new(@wrapped_context, public_key_output)
+    end
+
+    def combine(public_key : PublicKey)
+      combine([public_key])
     end
   end
 

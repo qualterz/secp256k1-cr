@@ -35,3 +35,17 @@ puts "Public key serialized and compressed: #{keypair.public_key.serialize_compr
 public_key_parsed = context.public_key_parse(public_key_serialized)
 
 puts "Public key parsed: #{public_key_parsed.bytes.hexstring}"
+
+public_key_another = context.keypair_generate.public_key
+
+puts "Public key another: #{public_key_another.bytes.hexstring}"
+
+public_keys = Array.new(4) { |index|
+  context.keypair_generate.public_key.tap { |public_key|
+    puts "Public key #{index}: #{public_key.bytes.hexstring}",
+  }
+}
+
+public_key_combination = public_key_another.combine(public_keys)
+
+puts "Public key combined: #{public_key_combination.bytes.hexstring}"
