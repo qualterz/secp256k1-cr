@@ -75,7 +75,7 @@ module Secp256k1
         public_keys.size
       )
 
-      if (result == CombineResult::Invalid.value)
+      if result == CombineResult::Invalid.value
         raise Error.new "Public key combination sum is invalid"
       end
 

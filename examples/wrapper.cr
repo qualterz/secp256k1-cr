@@ -42,7 +42,7 @@ puts "Public key another: #{public_key_another.bytes.hexstring}"
 
 public_keys = Array.new(4) { |index|
   context.keypair_generate.public_key.tap { |public_key|
-    puts "Public key #{index}: #{public_key.bytes.hexstring}",
+    puts "Public key #{index}: #{public_key.bytes.hexstring}"
   }
 }
 

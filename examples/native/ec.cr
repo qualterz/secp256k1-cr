@@ -12,10 +12,10 @@ def create_ec_keys(context)
   public_key = LibSecp256k1::Secp256k1Pubkey.new
 
   if LibSecp256k1.secp256k1_ec_pubkey_create(
-           context,
-           pointerof(public_key),
-           secret_key
-         ) == 0
+       context,
+       pointerof(public_key),
+       secret_key
+     ) == 0
     abort "Failed to create EC public key."
   end
 
@@ -25,12 +25,12 @@ def create_ec_keys(context)
   length = compressed_public_key.size.to_u64
 
   if LibSecp256k1.secp256k1_ec_pubkey_serialize(
-           context,
-           compressed_public_key,
-           pointerof(length),
-           pointerof(public_key),
-           LibSecp256k1::SECP256K1_EC_COMPRESSED
-         ) == 0
+       context,
+       compressed_public_key,
+       pointerof(length),
+       pointerof(public_key),
+       LibSecp256k1::SECP256K1_EC_COMPRESSED
+     ) == 0
     abort "Failed to serialize EC public key."
   end
 
