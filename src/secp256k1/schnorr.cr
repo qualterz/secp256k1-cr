@@ -10,19 +10,17 @@ module Secp256k1
 
   class Keypair
     def schnorr_sign(message : Bytes, auxiliary_randomness : Bytes) : Bytes
-      signature = Bytes.new(Schnorr::SIGNATURE_SIZE)
-
-      if LibSecp256k1.secp256k1_schnorrsig_sign32(
-           @wrapped_context,
-           signature,
-           message,
-           pointerof(@wrapped_keypair),
-           auxiliary_randomness
-         ) == Result::Wrong.value
-        raise Error.new "Failed to create Schnorr signature"
+      Bytes.new(Schnorr::SIGNATURE_SIZE).tap do |signature|
+        if LibSecp256k1.secp256k1_schnorrsig_sign32(
+             @wrapped_context,
+             signature,
+             message,
+             pointerof(@wrapped_keypair),
+             auxiliary_randomness
+           ) == Result::Wrong.value
+          raise Error.new "Failed to create Schnorr signature"
+        end
       end
-
-      signature
     end
 
     def schnorr_sign(message : Bytes) : Bytes
