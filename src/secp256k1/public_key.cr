@@ -34,7 +34,7 @@ module Secp256k1
       )
     end
 
-    private def serialize(size, flags)
+    def serialize(size, flags)
       Bytes.new(size).tap { |bytes|
         LibSecp256k1.secp256k1_ec_pubkey_serialize(
           @wrapped_context,
@@ -51,30 +51,30 @@ module Secp256k1
         pointerof(public_key.@wrapped_public_key)
       }
 
-      result = LibSecp256k1.secp256k1_ec_pubkey_combine(
-        @wrapped_context,
-        out public_key_out,
-        public_key_pointers.to_unsafe,
-        public_key_pointers.size
-      )
-
-      if result == Result::Wrong.value
+      if LibSecp256k1.secp256k1_ec_pubkey_combine(
+           @wrapped_context,
+           out public_key_out,
+           public_key_pointers.to_unsafe,
+           public_key_pointers.size
+         ) == Result::Wrong.value
         raise Error.new "Public key combination sum is invalid"
       end
 
       PublicKey.new(@wrapped_context, public_key_out)
     end
+
+    def combine(public_key : PublicKey)
+      combine([public_key])
+    end
   end
 
   class Context
     def public_key_create(secret_key : Bytes)
-      result = LibSecp256k1.secp256k1_ec_pubkey_create(
-        @wrapped_context,
-        out public_key_out,
-        secret_key
-      )
-
-      if result == Result::Wrong.value
+      if LibSecp256k1.secp256k1_ec_pubkey_create(
+           @wrapped_context,
+           out public_key_out,
+           secret_key
+         ) == Result::Wrong.value
         raise Error.new "Secret key is invalid"
       end
 
@@ -82,14 +82,12 @@ module Secp256k1
     end
 
     def public_key_parse(public_key : Bytes)
-      result = LibSecp256k1.secp256k1_ec_pubkey_parse(
-        @wrapped_context,
-        out public_key_out,
-        public_key,
-        public_key.size
-      )
-
-      if result == Result::Wrong.value
+      if LibSecp256k1.secp256k1_ec_pubkey_parse(
+           @wrapped_context,
+           out public_key_out,
+           public_key,
+           public_key.size
+         ) == Result::Wrong.value
         raise Error.new "Public key is invalid"
       end
 

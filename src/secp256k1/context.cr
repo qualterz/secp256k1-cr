@@ -16,12 +16,10 @@ module Secp256k1
     def initialize(@random)
       @wrapped_context = LibSecp256k1.secp256k1_context_create(LibSecp256k1::SECP256K1_CONTEXT_NONE)
 
-      result = LibSecp256k1.secp256k1_context_randomize(
-        @wrapped_context,
-        @random.random_bytes(RANDOM_SEED_SIZE)
-      )
-
-      if result == Result::Wrong.value
+      if LibSecp256k1.secp256k1_context_randomize(
+           @wrapped_context,
+           @random.random_bytes(RANDOM_SEED_SIZE)
+         ) == Result::Wrong.value
         raise Error.new "Failed to randomize context"
       end
     end

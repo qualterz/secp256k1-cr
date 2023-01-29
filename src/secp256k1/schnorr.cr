@@ -12,15 +12,13 @@ module Secp256k1
     def schnorr_sign(message : Bytes, auxiliary_randomness : Bytes) : Bytes
       signature = Bytes.new(Schnorr::SIGNATURE_SIZE)
 
-      result = LibSecp256k1.secp256k1_schnorrsig_sign32(
-        @wrapped_context,
-        signature,
-        message,
-        pointerof(@wrapped_keypair),
-        auxiliary_randomness
-      )
-
-      if result == Result::Wrong.value
+      if LibSecp256k1.secp256k1_schnorrsig_sign32(
+           @wrapped_context,
+           signature,
+           message,
+           pointerof(@wrapped_keypair),
+           auxiliary_randomness
+         ) == Result::Wrong.value
         raise Error.new "Failed to create Schnorr signature"
       end
 
@@ -34,27 +32,23 @@ module Secp256k1
 
   class XOnlyPublicKey
     def schnorr_verify(signature : Bytes, message : Bytes) : Bool
-      result = LibSecp256k1.secp256k1_schnorrsig_verify(
+      LibSecp256k1.secp256k1_schnorrsig_verify(
         @wrapped_context,
         signature,
         message,
         message.size,
         pointerof(@wrapped_xonly_public_key)
-      )
-
-      result == Result::Correct.value
+      ) == Result::Correct.value
     end
 
     def schnorr_verify(signature : Bytes)
-      result = LibSecp256k1.secp256k1_schnorrsig_verify(
+      LibSecp256k1.secp256k1_schnorrsig_verify(
         @wrapped_context,
         signature,
         nil,
         0,
         pointerof(@wrapped_xonly_public_key)
-      )
-
-      result == Result::Correct.value
+      ) == Result::Correct.value
     end
   end
 end

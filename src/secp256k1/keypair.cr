@@ -53,13 +53,11 @@ module Secp256k1
 
   class Context
     def keypair_create(secret_key : Bytes)
-      result = LibSecp256k1.secp256k1_keypair_create(
-        @wrapped_context,
-        out keypair_out,
-        secret_key
-      )
-
-      if result == Result::Wrong.value
+      if LibSecp256k1.secp256k1_keypair_create(
+           @wrapped_context,
+           out keypair_out,
+           secret_key
+         ) == Result::Wrong.value
         raise Error.new "Secret key is invalid"
       end
 
