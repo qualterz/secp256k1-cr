@@ -3,19 +3,6 @@ require "../lib_secp256k1"
 module Secp256k1
   class Context
     RANDOM_SEED_SIZE = 32
-
-    enum Type
-      None
-
-      def into_flag
-        case self
-        when Type::None
-          LibSecp256k1::SECP256K1_CONTEXT_NONE
-        else
-          raise Error.new "Unsupported context type"
-        end
-      end
-    end
   end
 
   class Context
@@ -27,7 +14,7 @@ module Secp256k1
     end
 
     def initialize(@random)
-      @wrapped_context = LibSecp256k1.secp256k1_context_create(Type::None.into_flag)
+      @wrapped_context = LibSecp256k1.secp256k1_context_create(LibSecp256k1::SECP256K1_CONTEXT_NONE)
 
       result = LibSecp256k1.secp256k1_context_randomize(
         @wrapped_context,
