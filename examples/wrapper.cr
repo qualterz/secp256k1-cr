@@ -50,6 +50,6 @@ public_key = public_key_another.combine(public_keys)
 
 puts "Public key combined: #{public_key.bytes.hexstring}"
 
-shared_secret = public_key_another.ecdh_create keypair.secret_key_bytes
+shared_secret = public_key_another.ecdh keypair.secret_key_bytes
 
 puts "Shared secret: #{shared_secret.hexstring}"

@@ -7,7 +7,7 @@ module Secp256k1
   end
 
   class PublicKey
-    def ecdh_create(secret_key : Bytes) : Bytes
+    def ecdh(secret_key : Bytes) : Bytes
       Bytes.new(Ecdh::SECRET_SIZE).tap do |secret|
         if LibSecp256k1.secp256k1_ecdh(
              @wrapped_context,
