@@ -1,10 +1,12 @@
 require "../shared"
 
 def create_keypair(context)
+  keypair = LibSecp256k1::Secp256k1Keypair.new
+
   loop {
     status = LibSecp256k1.secp256k1_keypair_create(
       context,
-      out keypair,
+      pointerof(keypair),
       randomness
     )
 
