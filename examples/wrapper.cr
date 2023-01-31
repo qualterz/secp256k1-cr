@@ -57,3 +57,7 @@ puts "Shared secret: #{shared_secret.hexstring}"
 ecdsa = keypair.ecdsa_sign(message_hash)
 
 puts "Ecdsa signature: #{ecdsa.bytes.hexstring}"
+
+ecdsa_verified = ecdsa.verify(message_hash, keypair.public_key)
+
+puts "Ecdsa signature verification: #{ecdsa_verified}"
