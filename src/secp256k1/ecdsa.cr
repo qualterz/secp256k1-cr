@@ -24,11 +24,11 @@ module Secp256k1
   end
 
   class Keypair
-    def ecdsa_sign(message : Bytes) : Ecdsa
+    def ecdsa_sign(message_hash : Bytes) : Ecdsa
       if LibSecp256k1.secp256k1_ecdsa_sign(
         @wrapped_context,
         out ecdsa_out,
-        message,
+        message_hash,
         secret_key_bytes,
         nil, nil
       ) == Result::Wrong.value
