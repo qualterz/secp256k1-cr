@@ -53,3 +53,7 @@ puts "Public key combined: #{public_key.bytes.hexstring}"
 shared_secret = public_key_another.ecdh keypair.secret_key_bytes
 
 puts "Shared secret: #{shared_secret.hexstring}"
+
+ecdsa = keypair.ecdsa_sign(message_hash)
+
+puts "Ecdsa signature: #{ecdsa.bytes.hexstring}"
