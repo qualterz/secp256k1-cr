@@ -32,7 +32,7 @@ module Secp256k1
         secret_key_bytes,
         nil, nil
       ) == Result::Wrong.value
-        raise Error.new "Failed to create ECDSA signature"
+        raise Error.new "Secret key is invalid"
       end
 
       Ecdsa.new(@wrapped_context, ecdsa_out)
