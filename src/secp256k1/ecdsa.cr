@@ -1,5 +1,5 @@
 require "../lib_secp256k1"
-require "./types"
+require "./common"
 
 module Secp256k1
   class Ecdsa
@@ -26,12 +26,12 @@ module Secp256k1
   class Keypair
     def ecdsa_sign(message_hash : Bytes) : Ecdsa
       if LibSecp256k1.secp256k1_ecdsa_sign(
-        @wrapped_context,
-        out ecdsa_out,
-        message_hash,
-        secret_key_bytes,
-        nil, nil
-      ) == Result::Wrong.value
+           @wrapped_context,
+           out ecdsa_out,
+           message_hash,
+           secret_key_bytes,
+           nil, nil
+         ) == Result::Wrong.value
         raise Error.new "Secret key is invalid"
       end
 

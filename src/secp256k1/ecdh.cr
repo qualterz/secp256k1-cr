@@ -1,5 +1,5 @@
 require "../lib_secp256k1"
-require "./types"
+require "./common"
 
 module Secp256k1
   class Ecdh
