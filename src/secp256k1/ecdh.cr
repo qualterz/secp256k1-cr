@@ -2,13 +2,9 @@ require "../lib_secp256k1"
 require "./common"
 
 module Secp256k1
-  class Ecdh
-    SECRET_SIZE = 32
-  end
-
   class PublicKey
     def ecdh(secret_key : Bytes) : Bytes
-      Bytes.new(Ecdh::SECRET_SIZE).tap do |secret|
+      Bytes.new(SECRET_KEY_SIZE).tap do |secret|
         if LibSecp256k1.secp256k1_ecdh(
              @wrapped_context,
              secret,

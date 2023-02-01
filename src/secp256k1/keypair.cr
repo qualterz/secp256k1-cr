@@ -3,10 +3,6 @@ require "./common"
 
 module Secp256k1
   class Keypair
-    SECRET_KEY_SIZE = 32
-  end
-
-  class Keypair
     @wrapped_context : LibSecp256k1::Secp256k1Context
     @wrapped_keypair : LibSecp256k1::Secp256k1Keypair
 
@@ -65,7 +61,7 @@ module Secp256k1
     end
 
     def keypair_generate
-      secret_key = @random.random_bytes(Keypair::SECRET_KEY_SIZE)
+      secret_key = @random.random_bytes(SECRET_KEY_SIZE)
 
       begin
         return keypair_create secret_key

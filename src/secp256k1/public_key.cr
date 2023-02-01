@@ -3,8 +3,6 @@ require "./common"
 
 module Secp256k1
   class PublicKey
-    SECRET_KEY_SIZE = 32
-
     SERIALIZED_SIZE            = 65_u64
     SERIALIZED_COMPRESSED_SIZE = 33_u64
   end
