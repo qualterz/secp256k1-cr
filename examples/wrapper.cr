@@ -16,7 +16,11 @@ puts "Keypair public key: #{keypair_public_key.hexstring}"
 
 keypair_xonly_public_key = keypair.xonly_public_key.bytes
 
-puts "Keypair XOnly public key: #{keypair_xonly_public_key.hexstring}"
+puts "XOnly public key: #{keypair_xonly_public_key.hexstring}"
+
+xonly_public_key_serialized = keypair.xonly_public_key.serialize
+
+puts "XOnly public key serialized: #{keypair_xonly_public_key.hexstring}"
 
 message_hash = OpenSSL::Digest.new("SHA256").update("Hello, crypto!").final
 signature_bytes = keypair.schnorr_sign(message_hash)
