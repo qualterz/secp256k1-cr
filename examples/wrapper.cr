@@ -27,7 +27,7 @@ signature_bytes = keypair.schnorr_sign(message_hash)
 
 puts "Schnorr signature: #{signature_bytes.hexstring}"
 
-signature_verified = keypair.xonly_public_key.schnorr_verify(signature_bytes, message_hash)
+signature_verified = keypair.schnorr_verify(signature_bytes, message_hash)
 
 puts "Schnorr signature verification: #{signature_verified}"
 

@@ -26,6 +26,14 @@ module Secp256k1
     def schnorr_sign(message : Bytes) : Bytes
       schnorr_sign message, @random.random_bytes(Schnorr::AUXILIARY_RANDOMNESS_SIZE)
     end
+
+    def schnorr_verify(signature : Bytes, message : Bytes) : Bool
+      xonly_public_key.schnorr_verify(signature, message)
+    end
+
+    def schnorr_verify(signature : Bytes) : Bool
+      xonly_public_key.schnorr_verify(signature)
+    end
   end
 
   class XOnlyPublicKey
@@ -39,7 +47,7 @@ module Secp256k1
       ) == Result::Correct.value
     end
 
-    def schnorr_verify(signature : Bytes)
+    def schnorr_verify(signature : Bytes) : Bool
       LibSecp256k1.secp256k1_schnorrsig_verify(
         @wrapped_context,
         signature,
