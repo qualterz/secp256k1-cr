@@ -5,8 +5,8 @@ module Secp256k1
   class PublicKey
     SECRET_KEY_SIZE = 32
 
-    PUBLIC_KEY_SERIALIZED_SIZE            = 65_u64
-    PUBLIC_KEY_SERIALIZED_COMPRESSED_SIZE = 33_u64
+    SERIALIZED_SIZE            = 65_u64
+    SERIALIZED_COMPRESSED_SIZE = 33_u64
   end
 
   class PublicKey
@@ -22,14 +22,14 @@ module Secp256k1
 
     def serialize
       serialize(
-        PUBLIC_KEY_SERIALIZED_SIZE,
+        SERIALIZED_SIZE,
         LibSecp256k1::SECP256K1_EC_UNCOMPRESSED
       )
     end
 
     def serialize_compressed
       serialize(
-        PUBLIC_KEY_SERIALIZED_COMPRESSED_SIZE,
+        SERIALIZED_COMPRESSED_SIZE,
         LibSecp256k1::SECP256K1_EC_COMPRESSED
       )
     end
