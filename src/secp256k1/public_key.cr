@@ -32,7 +32,7 @@ module Secp256k1
       )
     end
 
-    def serialize(size, flags)
+    private def serialize(size, flags)
       Bytes.new(size).tap { |bytes|
         LibSecp256k1.secp256k1_ec_pubkey_serialize(
           @wrapped_context,
