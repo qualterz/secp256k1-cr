@@ -34,7 +34,7 @@ module Secp256k1
         out xonly_public_key_out,
         xonly_public_key
       ) == Result::Wrong.value
-        raise Error.new "The public key could not be parsed or is invalid"
+        raise Error.new "Public key could not be parsed or invalid"
       end
 
       XOnlyPublicKey.new(@wrapped_context, xonly_public_key_out)
