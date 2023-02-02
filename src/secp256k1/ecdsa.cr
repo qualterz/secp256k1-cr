@@ -38,13 +38,13 @@ module Secp256k1
       Ecdsa.new(@wrapped_context, ecdsa_out)
     end
 
-    def ecdsa_verify(ecdsa : Ecdsa, message_hash : Bytes)
+    def ecdsa_verify(ecdsa : Ecdsa, message_hash : Bytes) : Bool
       ecdsa.verify(message_hash, public_key)
     end
   end
 
   class PublicKey
-    def ecdsa_verify(ecdsa : Ecdsa, message_hash : Bytes)
+    def ecdsa_verify(ecdsa : Ecdsa, message_hash : Bytes) : Bool
       ecdsa.verify(message_hash, self)
     end
   end

@@ -25,7 +25,7 @@ module Secp256k1
       }
     end
 
-    def public_key
+    def public_key : PublicKey
       LibSecp256k1.secp256k1_keypair_pub(
         @wrapped_context,
         out public_key_out,
@@ -35,7 +35,7 @@ module Secp256k1
       PublicKey.new(@wrapped_context, public_key_out)
     end
 
-    def xonly_public_key
+    def xonly_public_key : XOnlyPublicKey
       LibSecp256k1.secp256k1_keypair_xonly_pub(
         @wrapped_context,
         out xonly_public_key_out,
@@ -48,7 +48,7 @@ module Secp256k1
   end
 
   class Context
-    def keypair_create(secret_key : Bytes)
+    def keypair_create(secret_key : Bytes) : Keypair
       if LibSecp256k1.secp256k1_keypair_create(
            @wrapped_context,
            out keypair_out,
@@ -60,7 +60,7 @@ module Secp256k1
       Keypair.new(@wrapped_context, keypair_out, @random)
     end
 
-    def keypair_generate
+    def keypair_generate : Keypair
       secret_key = @random.random_bytes(SECRET_KEY_SIZE)
 
       begin

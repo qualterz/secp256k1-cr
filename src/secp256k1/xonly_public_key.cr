@@ -16,7 +16,7 @@ module Secp256k1
       @wrapped_xonly_public_key.data.to_slice
     end
 
-    def serialize
+    def serialize : Bytes
       Bytes.new(SERIALZIED_SIZE).tap do |bytes|
         LibSecp256k1.secp256k1_xonly_pubkey_serialize(
           @wrapped_context,
@@ -28,7 +28,7 @@ module Secp256k1
   end
 
   class Context
-    def xonly_public_key_parse(xonly_public_key : Bytes)
+    def xonly_public_key_parse(xonly_public_key : Bytes) : XOnlyPublicKey
       if LibSecp256k1.secp256k1_xonly_pubkey_parse(
         @wrapped_context,
         out xonly_public_key_out,

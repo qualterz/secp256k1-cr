@@ -18,21 +18,21 @@ module Secp256k1
       @wrapped_public_key.data.to_slice
     end
 
-    def serialize
+    def serialize : Bytes
       serialize(
         SERIALIZED_SIZE,
         LibSecp256k1::SECP256K1_EC_UNCOMPRESSED
       )
     end
 
-    def serialize_compressed
+    def serialize_compressed : Bytes
       serialize(
         SERIALIZED_COMPRESSED_SIZE,
         LibSecp256k1::SECP256K1_EC_COMPRESSED
       )
     end
 
-    private def serialize(size, flags)
+    private def serialize(size, flags) : Bytes
       Bytes.new(size).tap { |bytes|
         LibSecp256k1.secp256k1_ec_pubkey_serialize(
           @wrapped_context,
@@ -44,7 +44,7 @@ module Secp256k1
       }
     end
 
-    def combine(public_keys : Array(PublicKey))
+    def combine(public_keys : Array(PublicKey)) : PublicKey
       public_key_pointers = public_keys.map { |public_key|
         pointerof(public_key.@wrapped_public_key)
       }
@@ -61,13 +61,13 @@ module Secp256k1
       PublicKey.new(@wrapped_context, public_key_out)
     end
 
-    def combine(public_key : PublicKey)
+    def combine(public_key : PublicKey) : PublicKey
       combine([public_key])
     end
   end
 
   class Context
-    def public_key_create(secret_key : Bytes)
+    def public_key_create(secret_key : Bytes) : PublicKey
       if LibSecp256k1.secp256k1_ec_pubkey_create(
            @wrapped_context,
            out public_key_out,
@@ -79,7 +79,7 @@ module Secp256k1
       PublicKey.new(@wrapped_context, public_key_out)
     end
 
-    def public_key_parse(public_key : Bytes)
+    def public_key_parse(public_key : Bytes) : PublicKey
       if LibSecp256k1.secp256k1_ec_pubkey_parse(
            @wrapped_context,
            out public_key_out,
