@@ -60,10 +60,6 @@ module Secp256k1
 
       PublicKey.new(@wrapped_context, public_key_out)
     end
-
-    def combine(public_key : PublicKey) : PublicKey
-      combine([public_key])
-    end
   end
 
   class Context
