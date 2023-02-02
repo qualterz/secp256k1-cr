@@ -66,6 +66,6 @@ ecdsa = keypair.ecdsa_sign(message_hash)
 
 puts "Ecdsa signature: #{ecdsa.bytes.hexstring}"
 
-ecdsa_verified = ecdsa.verify(message_hash, keypair.public_key)
+ecdsa_verified = keypair.ecdsa_verify ecdsa, message_hash
 
 puts "Ecdsa signature verification: #{ecdsa_verified}"
