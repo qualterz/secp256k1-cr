@@ -6,19 +6,19 @@ keypair = context.keypair_generate
 
 puts "Keypair hex: #{keypair.bytes.hexstring}"
 
-keypair_secret_key = keypair.secret_key_bytes
+secret_key = keypair.secret_key_bytes
 
-puts "Keypair secret key: #{keypair_secret_key.hexstring}"
+puts "Keypair secret key: #{secret_key.hexstring}"
 
-keypair_public_key = keypair.public_key.bytes
+public_key = keypair.public_key.bytes
 
-puts "Keypair public key: #{keypair_public_key.hexstring}"
+puts "Keypair public key: #{public_key.hexstring}"
 
-keypair_xonly_public_key = keypair.xonly_public_key.bytes
+xonly_public_key = keypair.xonly_public_key
 
-puts "XOnly public key: #{keypair_xonly_public_key.hexstring}"
+puts "XOnly public key: #{xonly_public_key.bytes.hexstring}"
 
-xonly_public_key_serialized = keypair.xonly_public_key.serialize
+xonly_public_key_serialized = xonly_public_key.serialize
 
 puts "XOnly public key serialized: #{xonly_public_key_serialized.hexstring}"
 
@@ -27,18 +27,19 @@ xonly_public_key_parsed = context.xonly_public_key_parse xonly_public_key_serial
 puts "XOnly public key parsed: #{xonly_public_key_parsed.bytes.hexstring}"
 
 message_hash = OpenSSL::Digest.new("SHA256").update("Hello, crypto!").final
-signature_bytes = keypair.schnorr_sign(message_hash)
+schnorr = keypair.schnorr_sign(message_hash)
 
-puts "Schnorr signature: #{signature_bytes.hexstring}"
+puts "Schnorr signature: #{schnorr.hexstring}"
 
-signature_verified = keypair.schnorr_verify(signature_bytes, message_hash)
+signature_verified = keypair.schnorr_verify(schnorr, message_hash)
 
 puts "Schnorr signature verification: #{signature_verified}"
 
 public_key_serialized = keypair.public_key.serialize
+public_key_serialized_compressed = keypair.public_key.serialize_compressed
 
 puts "Public key serialized: #{public_key_serialized.hexstring}"
-puts "Public key serialized and compressed: #{keypair.public_key.serialize_compressed.hexstring}"
+puts "Public key serialized and compressed: #{public_key_serialized_compressed.hexstring}"
 
 public_key_parsed = context.public_key_parse(public_key_serialized)
 
