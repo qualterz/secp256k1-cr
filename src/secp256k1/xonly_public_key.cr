@@ -26,4 +26,18 @@ module Secp256k1
       end
     end
   end
+
+  class Context
+    def xonly_public_key_parse(xonly_public_key : Bytes)
+      if LibSecp256k1.secp256k1_xonly_pubkey_parse(
+        @wrapped_context,
+        out xonly_public_key_out,
+        xonly_public_key
+      ) == Result::Wrong.value
+        raise Error.new "The public key could not be parsed or is invalid"
+      end
+
+      XOnlyPublicKey.new(@wrapped_context, xonly_public_key_out)
+    end
+  end
 end
